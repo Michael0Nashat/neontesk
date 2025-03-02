@@ -1,10 +1,9 @@
 from flask import Flask, request, jsonify
 import psycopg2
-import os
 
 app = Flask(__name__)
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgres://neondb_owner:npg_wAPfeFY32VGQ@ep-sweet-meadow-a5fdw1lp-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require")
+DATABASE_URL = "postgres://neondb_owner:npg_wAPfeFY32VGQ@ep-sweet-meadow-a5fdw1lp-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require"
 
 conn = psycopg2.connect(DATABASE_URL)
 cursor = conn.cursor()
@@ -46,6 +45,5 @@ def delete_todo(todo_id):
     conn.commit()
     return jsonify({"message": "Deleted successfully"})
 
-# Expose `app` for Vercel
-def handler(event, context):
-    return app(event, context)
+if __name__ == '__main__':
+    app.run(debug=True)
